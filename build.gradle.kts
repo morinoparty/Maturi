@@ -41,7 +41,7 @@ paper {
     generateLibrariesJson = true
     foliaSupported = false
 
-    val mainPackage = "com.github.tyonakaisan.example"
+    val mainPackage = "github.tyonakaisan.example"
     main = "$mainPackage.Example"
     bootstrapper = "$mainPackage.ExampleBootstrap"
     loader = "$mainPackage.ExampleLoader"
