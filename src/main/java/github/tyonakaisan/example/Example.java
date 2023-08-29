@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import github.tyonakaisan.example.command.ExampleCommand;
 import github.tyonakaisan.example.command.commands.ReloadCommand;
+import github.tyonakaisan.example.listener.ExampleListener;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,6 +18,7 @@ import java.util.Set;
 public final class Example extends JavaPlugin {
 
     private static final Set<Class<? extends Listener>> LISTENER_CLASSES = Set.of(
+            ExampleListener.class
     );
     private static final Set<Class<? extends ExampleCommand>> COMMAND_CLASSES = Set.of(
             ReloadCommand.class
