@@ -47,7 +47,6 @@ public final class Example extends JavaPlugin {
             var command = this.injector.getInstance(commandClass);
             command.init();
         }
-
     }
 
     @Override

@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("xyz.jpenilla.run-paper") version "2.1.0"
+    id("xyz.jpenilla.run-paper") version "2.2.2"
     id("net.minecrell.plugin-yml.paper") version "0.6.0"
 }
 
@@ -18,10 +18,10 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("net.objecthunter", "exp4j", "0.4.8")
-    testImplementation("io.papermc.paper", "paper-api", "1.20.1-R0.1-SNAPSHOT")
+    testImplementation("io.papermc.paper", "paper-api", "1.20.4-R0.1-SNAPSHOT")
 
     // Paper
-    compileOnly("io.papermc.paper", "paper-api", "1.20.1-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper", "paper-api", "1.20.4-R0.1-SNAPSHOT")
 
     // Config
     paperLibrary("org.spongepowered", "configurate-hocon", "4.1.2")
@@ -61,7 +61,7 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.20.1")
+        minecraftVersion("1.20.4")
     }
 
     test {
