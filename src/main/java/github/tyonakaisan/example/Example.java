@@ -21,7 +21,7 @@ public final class Example extends JavaPlugin {
     ) {
         this.injector = bootstrapInjector.createChildInjector(new ExampleModule(this));
 
-        CommandItemProvider.register(this);
+        ExampleProvider.register(this);
     }
 
     @Override
@@ -31,11 +31,6 @@ public final class Example extends JavaPlugin {
         listeners.forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
         this.injector.getInstance(CommandFactory.class).registerViaEnable(this);
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
     }
 
     @Override
