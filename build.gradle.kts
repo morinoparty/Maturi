@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("xyz.jpenilla.run-paper") version "2.2.2"
+    id("xyz.jpenilla.run-paper") version "2.3.0"
     id("net.minecrell.plugin-yml.paper") version "0.6.0"
 }
 
@@ -18,17 +18,15 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("net.objecthunter", "exp4j", "0.4.8")
-    testImplementation("io.papermc.paper", "paper-api", "1.20.4-R0.1-SNAPSHOT")
 
     // Paper
-    compileOnly("io.papermc.paper", "paper-api", "1.20.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper", "paper-api", "1.20.6-R0.1-SNAPSHOT")
 
     // Config
-    paperLibrary("org.spongepowered", "configurate-hocon", "4.1.2")
-    paperLibrary("net.kyori", "adventure-serializer-configurate4", "4.12.0")
+    paperLibrary("org.spongepowered", "configurate-hocon", "4.2.0-SNAPSHOT")
+    paperLibrary("net.kyori", "adventure-serializer-configurate4", "4.17.0")
 
     // Others
-    paperLibrary("cloud.commandframework", "cloud-paper", "1.8.3")
     paperLibrary("com.google.inject", "guice", "7.0.0")
 }
 
@@ -53,7 +51,7 @@ paper {
 tasks {
     compileJava {
         this.options.encoding = Charsets.UTF_8.name()
-        options.release.set(17)
+        options.release.set(21)
     }
 
     shadowJar {
@@ -61,7 +59,7 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.20.4")
+        minecraftVersion("1.20.6")
     }
 
     test {

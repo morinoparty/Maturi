@@ -29,13 +29,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Singleton
 @DefaultQualifier(NonNull.class)
-@SuppressWarnings("unused")
+@Singleton
 public final class Messages {
-
-    private final Path dataDirectory;
     private final ComponentLogger logger;
+    private final Path messagesDir;
 
     private final Map<Locale, ResourceBundle> locales = new HashMap<>();
     private final Map<Locale, String> supportedLocales = Map.of(
@@ -44,15 +42,15 @@ public final class Messages {
     );
     private final Pattern pattern = Pattern.compile("messages_(.+)\\.properties");
     private static final String BUNDLE = "locale.messages";
-    private static final String PREFIX = "[example]";
+    private static final String PREFIX = "<white>[<gradient:#005aa7:#fffde4>Example </gradient>]</white>";
 
     @Inject
     public Messages(
             final Path dataDirectory,
             final ComponentLogger logger
     ) {
-        this.dataDirectory = dataDirectory;
         this.logger = logger;
+        this.messagesDir = dataDirectory.resolve("locale");
 
         this.reloadMessage();
     }
@@ -63,26 +61,23 @@ public final class Messages {
         this.loadMessageFile();
     }
 
-    private void loadMessageFile() {
-        var path = this.dataDirectory.resolve("locale");
-
-        if (!Files.exists(path)) {
+    public void loadMessageFile() {
+        if (!Files.exists(this.messagesDir)) {
             try {
-                Files.createDirectories(path);
+                Files.createDirectories(this.messagesDir);
             } catch (final IOException e) {
-                this.logger.error(String.format("Failed to create directories for '%s'", path), e);
-                return;
+                this.logger.error(String.format("Failed to create directory %s", this.messagesDir), e);
             }
         }
 
         // Create supported locales
-        this.createSupportedLocales(path);
+        this.createSupportedLocales(this.messagesDir);
 
         // Load messages_*.properties locale
-        try (Stream<Path> paths = Files.list(path)) {
+        try (final Stream<Path> paths = Files.list(this.messagesDir)) {
             paths.filter(Files::isRegularFile)
                     .forEach(this::loadMatchFile);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             this.logger.error("Failed to load locales.", e);
         }
 
@@ -90,10 +85,10 @@ public final class Messages {
     }
 
     private void createSupportedLocales(final Path path) {
-        for (Map.Entry<Locale, String> localesEntry : this.supportedLocales.entrySet()) {
-            var locale = localesEntry.getKey();
-            var fileName = localesEntry.getValue();
-            var localePath = path.resolve(fileName + ".properties");
+        for (final Map.Entry<Locale, String> localesEntry : this.supportedLocales.entrySet()) {
+            final var locale = localesEntry.getKey();
+            final var fileName = localesEntry.getValue();
+            final var localePath = path.resolve(fileName + ".properties");
 
             if (!Files.exists(localePath)) {
                 ResourceBundle bundle = ResourceBundle.getBundle("locale." + fileName, locale, UTF8ResourceBundleControl.get());
@@ -103,7 +98,7 @@ public final class Messages {
     }
 
     private void createProperties(final Path path, final ResourceBundle bundle) {
-        var properties = new Properties() {
+        final var properties = new Properties() {
             @Override
             public synchronized Set<Map.Entry<Object, Object>> entrySet() {
                 return Collections.unmodifiableSet(
@@ -113,7 +108,7 @@ public final class Messages {
                                 .collect(Collectors.toCollection(LinkedHashSet::new)));
             }
         };
-        try (Writer outputStream = Files.newBufferedWriter(path)) {
+        try (final Writer outputStream = Files.newBufferedWriter(path)) {
             properties.putAll(bundle.keySet().stream()
                     .collect(Collectors.toMap(
                             key -> key,
@@ -121,15 +116,15 @@ public final class Messages {
                     )));
             properties.store(outputStream, null);
             this.logger.info("successfully '{}' created!", path.getFileName());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             this.logger.error("Failed to create '{}' locales.", bundle.getLocale(), e);
         }
     }
 
     private void loadMatchFile(final Path path) {
-        var matcher = this.pattern.matcher(path.getFileName().toString());
+        final var matcher = this.pattern.matcher(path.getFileName().toString());
         if (matcher.matches()) {
-            @Nullable Locale locale = Translator.parseLocale(matcher.group(1));
+            final @Nullable Locale locale = Translator.parseLocale(matcher.group(1));
 
             if (locale == null) {
                 this.logger.warn("Invalid locales {}", path.getFileName());
@@ -140,9 +135,9 @@ public final class Messages {
     }
 
     private void load(final Locale locale, final Path path) {
-        try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
+        try (final BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             this.locales.put(locale, new PropertyResourceBundle(reader));
-        } catch (Exception e) {
+        } catch (final Exception e) {
             this.logger.error(String.format("Failed to load %s", path.getFileName()), e);
         }
     }
@@ -153,11 +148,11 @@ public final class Messages {
 
     public Component translatable(final Style style, final Audience audience, @PropertyKey(resourceBundle = BUNDLE) final String key, final TagResolver tagResolver) {
         var addPrefixTagResolver = TagResolver.builder()
-                .resolver(tagResolver)
                 .tag("prefix", Tag.selfClosingInserting(MiniMessage.miniMessage().deserialize(PREFIX)))
+                .resolver(tagResolver)
                 .build();
 
-        return audience instanceof Player player
+        return audience instanceof final Player player
                 ? this.forPlayer(style, player, key, addPrefixTagResolver)
                 : this.forAudience(style, key, addPrefixTagResolver);
     }
@@ -186,7 +181,7 @@ public final class Messages {
 
         // keyがない場合
         if (!resource.keySet().contains(key)) {
-            var bundle = ResourceBundle.getBundle(BUNDLE, Locale.US, UTF8ResourceBundleControl.get());
+            final var bundle = ResourceBundle.getBundle(BUNDLE, Locale.US, UTF8ResourceBundleControl.get());
             this.logger.warn("Message retrieved from resource bundle because '{}' does not exist in messages.properties.", key);
             return component.append(MiniMessage.miniMessage().deserialize("<hover:show_text:'<red>This message is taken from the resource bundle'>" + bundle.getString(key), tagResolver));
         }

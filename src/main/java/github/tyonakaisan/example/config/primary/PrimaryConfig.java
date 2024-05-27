@@ -7,5 +7,4 @@ import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 @ConfigSerializable
 @DefaultQualifier(NonNull.class)
 public class PrimaryConfig {
-    // TODO
 }

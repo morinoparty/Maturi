@@ -20,7 +20,7 @@ import java.nio.file.Path;
 
 @Singleton
 @DefaultQualifier(NonNull.class)
-public final class ConfigFactory {
+public class ConfigFactory {
 
     private static final String PRIMARY_CONFIG_FILE_NAME = "config.conf";
 

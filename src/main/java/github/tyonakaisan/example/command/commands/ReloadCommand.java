@@ -1,46 +1,46 @@
 package github.tyonakaisan.example.command.commands;
 
-import cloud.commandframework.CommandManager;
 import com.google.inject.Inject;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.builder.ArgumentBuilder;
 import github.tyonakaisan.example.command.ExampleCommand;
 import github.tyonakaisan.example.config.ConfigFactory;
 import github.tyonakaisan.example.message.Messages;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
+import static io.papermc.paper.command.brigadier.Commands.literal;
+
+@SuppressWarnings("UnstableApiUsage")
 @DefaultQualifier(NonNull.class)
 public final class ReloadCommand implements ExampleCommand {
 
     private final ConfigFactory configFactory;
     private final Messages messages;
-    private final CommandManager<CommandSender> commandManager;
 
     @Inject
     public ReloadCommand(
             final ConfigFactory configFactory,
-            final Messages messages,
-            final CommandManager<CommandSender> commandManager
+            final Messages messages
     ) {
         this.configFactory = configFactory;
         this.messages = messages;
-        this.commandManager = commandManager;
     }
 
     @Override
-    public void init() {
-        final var command = this.commandManager.commandBuilder("example", "ex")
-                .literal("reload")
-                .permission("example.command.reload")
-                .senderType(CommandSender.class)
-                .handler(handler -> {
+    public ArgumentBuilder<CommandSourceStack, ?> init() {
+        return literal("reload")
+                .requires(source -> source.getSender().hasPermission("commanditem.command.reload"))
+                .executes(context -> {
+                    final CommandSender sender = context.getSource().getSender();
                     this.configFactory.reloadPrimaryConfig();
-                    final var sender = (Player) handler.getSender();
-                    sender.sendMessage(this.messages.translatable(Messages.Style.SUCCESS, sender, "command.reload.success"));
-                })
-                .build();
+                    this.messages.reloadMessage();
 
-        this.commandManager.command(command);
+                    sender.sendMessage(this.messages.translatable(Messages.Style.SUCCESS, sender, "command.reload.success.reload"));
+
+                    return Command.SINGLE_SUCCESS;
+                });
     }
 }
