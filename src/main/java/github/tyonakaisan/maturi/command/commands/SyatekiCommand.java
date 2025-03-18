@@ -59,7 +59,7 @@ public final class SyatekiCommand implements MaturiCommand {
                 .then(literal("ranking")
                         .executes(context -> {
                             if (context.getSource().getSender() instanceof Player player) {
-                                this.rankingMenu.open(player, Syateki.Difficulty.HARD);
+                                // this.rankingMenu.open(player, Syateki.Difficulty.HARD);
                             }
                             return 1;
                         }));

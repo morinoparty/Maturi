@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // ChestInterface.Builder#addTransform()がfor文で機能しないため
+// 使ってないから一時的に直す
 
 /**
  * Functions exactly the same as {@link ChestInterface}.
@@ -149,7 +150,7 @@ public final class ReChestInterface implements ChildTitledInterface<ChestPane, P
             final @NonNull InterfaceArguments arguments,
             final @NonNull Component title
     ) {
-        final var chestInterface = new ChestInterface(this.rows, this.title, this.transformationList, this.closeHandlerList, this.updates, this.updateDelay, this.clickHandler);
+        final var chestInterface = new ChestInterface(this.rows, this.title, this.transformationList, this.closeHandlerList, this.updates, this.updateDelay, false, this.clickHandler);
         final @NonNull ChestView view = new ChestView(chestInterface, viewer, arguments, title);
 
         view.open();
@@ -163,7 +164,7 @@ public final class ReChestInterface implements ChildTitledInterface<ChestPane, P
             @NonNull final InterfaceArguments arguments,
             @NonNull final Component title
     ) {
-        final var chestInterface = new ChestInterface(this.rows, this.title, this.transformationList, this.closeHandlerList, this.updates, this.updateDelay, this.clickHandler);
+        final var chestInterface = new ChestInterface(this.rows, this.title, this.transformationList, this.closeHandlerList, this.updates, this.updateDelay, false, this.clickHandler);
         final @NonNull ChestView view = new ChestView((PlayerView<?>) parent, chestInterface, parent.viewer(), arguments, title);
 
         view.open();
@@ -176,7 +177,7 @@ public final class ReChestInterface implements ChildTitledInterface<ChestPane, P
             final @NonNull InterfaceView<?, PlayerViewer> parent,
             final @NonNull InterfaceArguments arguments
     ) {
-        final var chestInterface = new ChestInterface(this.rows, this.title, this.transformationList, this.closeHandlerList, this.updates, this.updateDelay, this.clickHandler);
+        final var chestInterface = new ChestInterface(this.rows, this.title, this.transformationList, this.closeHandlerList, this.updates, this.updateDelay, false, this.clickHandler);
         final @NonNull ChestView view = new ChestView((PlayerView<?>) parent, chestInterface, parent.viewer(), arguments, this.title);
 
         view.open();
@@ -399,6 +400,7 @@ public final class ReChestInterface implements ChildTitledInterface<ChestPane, P
                     this.closeHandlerList,
                     this.updates,
                     this.updateDelay,
+                    false,
                     this.clickHandler
             );
         }

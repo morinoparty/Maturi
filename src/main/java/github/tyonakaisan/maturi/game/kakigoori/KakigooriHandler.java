@@ -87,7 +87,7 @@ public final class KakigooriHandler {
         clerk.setRotation(180, 0);
         clerk.setAI(false);
         clerk.setSilent(true);
-        clerk.setLootTable(LootTables.EMPTY.getLootTable());
+        clerk.setLootTable(LootTables.VILLAGER.getLootTable());
         clerk.getEquipment().setItem(EquipmentSlot.HEAD, this.hat());
         clerk.setInvulnerable(true);
         return clerk;

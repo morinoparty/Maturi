@@ -40,7 +40,7 @@ dependencies {
     implementation("fr.mrmicky", "fastboard", "2.1.2")
 }
 
-version = "0.0.21-SNAPSHOT"
+version = "0.0.22-SNAPSHOT"
 
 paper {
     authors = listOf("tyonakaisan")
@@ -87,7 +87,7 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.21")
+        minecraftVersion("1.21.4")
         downloadPlugins {
             github("MilkBowl", "Vault", "1.7.3", "Vault.jar")
             github("jpenilla","TabTPS", "v1.3.24", "tabtps-spigot-1.3.24.jar")
