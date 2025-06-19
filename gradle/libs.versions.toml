@@ -1,0 +1,35 @@
+[versions]
+run-paper = "2.3.1"
+shadow = "8.3.5"
+plugin-yml-paper = "0.7.1"
+
+minecraft = "1.21.4"
+paper-api = "1.21.4-R0.1-SNAPSHOT"
+
+vault = "1.7.1"
+
+configurate-hocon = "4.2.0"
+adventure-serializer-configurate4 = "4.21.0"
+
+guice = "7.0.0"
+exp4j = "0.4.8"
+interfaces = "1.0.0-SNAPSHOT"
+fastboard = "2.1.5"
+
+[plugins]
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
+plugin-yml-paper = { id = "de.eldoria.plugin-yml.paper", version.ref = "plugin-yml-paper" }
+
+[libraries]
+paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper-api" }
+
+vault = { group = "com.github.MilkBowl", name = "VaultAPI", version.ref = "vault" }
+
+configurate-hocon = { group = "org.spongepowered", name = "configurate-hocon", version.ref = "configurate-hocon" }
+adventure-serializer-configurate4 = { group = "net.kyori", name = "adventure-serializer-configurate4", version.ref = "adventure-serializer-configurate4" }
+
+guice = { group = "com.google.inject", name = "guice", version.ref = "guice" }
+exp4j = { group = "net.objecthunter", name = "exp4j", version.ref = "exp4j" }
+interfaces =  { group = "org.incendo.interfaces", name = "interfaces-paper", version.ref = "interfaces" }
+fastboard =  { group = "fr.mrmicky", name = "fastboard", version.ref = "fastboard" }

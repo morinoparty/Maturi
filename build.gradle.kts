@@ -2,54 +2,53 @@ import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 
 plugins {
     id("java")
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("xyz.jpenilla.run-paper") version "2.3.0"
-    id("net.minecrell.plugin-yml.paper") version "0.6.0"
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.run.paper)
+    alias(libs.plugins.plugin.yml.paper)
 }
 
+group = rootProject.group
+version = rootProject.version
+val projectName = rootProject.name
+
 repositories {
-    mavenLocal()
     mavenCentral()
     maven("https://jitpack.io")
-    maven("https://oss.sonatype.org/content/repositories/snapshots/")
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 }
 
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("net.objecthunter", "exp4j", "0.4.8")
-    testImplementation("io.papermc.paper", "paper-api", "1.20.6-R0.1-SNAPSHOT")
+    testImplementation(libs.exp4j)
 
     // Paper
-    compileOnly("io.papermc.paper", "paper-api", "1.20.6-R0.1-SNAPSHOT")
+    compileOnly(libs.paper.api)
 
     // Plugin
-    compileOnly("com.github.MilkBowl", "VaultAPI", "1.7")
+    compileOnly(libs.vault)
     compileOnly(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar")))) // CommandItem
 
     // Config
-    paperLibrary("org.spongepowered", "configurate-hocon", "4.2.0-SNAPSHOT")
-    paperLibrary("net.kyori", "adventure-serializer-configurate4", "4.17.0")
+    paperLibrary(libs.configurate.hocon)
+    paperLibrary(libs.adventure.serializer.configurate4)
 
     // Others
-    paperLibrary("com.google.inject", "guice", "7.0.0")
-    paperLibrary("net.objecthunter", "exp4j", "0.4.8")
-    implementation("org.incendo.interfaces", "interfaces-paper", "1.0.0-SNAPSHOT")
-    implementation("fr.mrmicky", "fastboard", "2.1.2")
+    paperLibrary(libs.guice)
+    paperLibrary(libs.exp4j)
+    implementation(libs.interfaces)
+    implementation(libs.fastboard)
 }
-
-version = "0.0.22-SNAPSHOT"
 
 paper {
     authors = listOf("tyonakaisan")
     website = "https://github.com/tyonakaisan"
-    apiVersion = "1.20"
+    apiVersion = libs.versions.minecraft.get()
     generateLibrariesJson = true
     foliaSupported = false
 
-    val mainPackage = "github.tyonakaisan.maturi"
+    val mainPackage = "$group.${projectName.lowercase()}"
     main = "$mainPackage.Maturi"
     bootstrapper = "$mainPackage.MaturiBootstrap"
     loader = "$mainPackage.MaturiLoader"
@@ -76,9 +75,10 @@ paper {
 }
 
 tasks {
+    val javaVersion = "${property("java_version")}".toInt()
     compileJava {
         this.options.encoding = Charsets.UTF_8.name()
-        options.release.set(21)
+        options.release.set(javaVersion)
     }
 
     shadowJar {
@@ -87,7 +87,7 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.21.4")
+        minecraftVersion(libs.versions.minecraft.get())
         downloadPlugins {
             github("MilkBowl", "Vault", "1.7.3", "Vault.jar")
             github("jpenilla","TabTPS", "v1.3.24", "tabtps-spigot-1.3.24.jar")
