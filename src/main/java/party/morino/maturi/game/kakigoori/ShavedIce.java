@@ -5,12 +5,11 @@ import github.tyonakaisan.commanditem.item.Item;
 import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 // w
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class ShavedIce {
 
     private ShavedIce() {

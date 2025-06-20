@@ -1,11 +1,10 @@
 package party.morino.maturi.game.syateki.data;
 
+import org.bukkit.Location;
+import org.jspecify.annotations.NullMarked;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import party.morino.maturi.game.Area;
 import party.morino.maturi.game.syateki.Syateki;
-import org.bukkit.Location;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
-import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 /**
  * Represents the areas used in the {@link Syateki} game.
@@ -14,7 +13,7 @@ import org.spongepowered.configurate.objectmapping.ConfigSerializable;
  * @param restrictedArea  the restrictedArea
  * @param spawnPoint      the spawnPoint
  */
-@DefaultQualifier(NonNull.class)
+@NullMarked
 @ConfigSerializable
 public record SyatekiArea(
         Area targetSpawnArea,

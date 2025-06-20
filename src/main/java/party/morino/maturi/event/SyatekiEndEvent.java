@@ -1,17 +1,16 @@
 package party.morino.maturi.event;
 
-import party.morino.maturi.game.syateki.Syateki;
-import party.morino.maturi.game.syateki.data.SyatekiResult;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
+import party.morino.maturi.game.syateki.Syateki;
+import party.morino.maturi.game.syateki.data.SyatekiResult;
 
 /**
  * Event called when {@link Syateki} end.
  */
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class SyatekiEndEvent extends Event {
 
     private final Syateki syateki;

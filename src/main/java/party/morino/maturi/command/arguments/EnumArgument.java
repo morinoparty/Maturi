@@ -12,10 +12,12 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("UnstableApiUsage")
+@NullMarked
 public class EnumArgument<E extends Enum<E>> implements CustomArgumentType.Converted<E, String> {
 
     private final Class<E> enumClass;

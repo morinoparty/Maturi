@@ -2,13 +2,12 @@ package party.morino.maturi.config.primary;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
 @ConfigSerializable
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public class KakigooriSettings {
 
     private int prize = 100;

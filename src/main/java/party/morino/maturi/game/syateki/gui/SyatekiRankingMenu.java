@@ -1,10 +1,6 @@
 package party.morino.maturi.game.syateki.gui;
 
 import com.google.inject.Inject;
-import party.morino.maturi.game.AbstractGui;
-import party.morino.maturi.game.syateki.Syateki;
-import party.morino.maturi.game.syateki.SyatekiManager;
-import party.morino.maturi.game.syateki.data.SyatekiResult;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.Tag;
@@ -13,20 +9,23 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
 import org.incendo.interfaces.core.click.ClickHandler;
 import org.incendo.interfaces.paper.PlayerViewer;
 import org.incendo.interfaces.paper.element.ItemStackElement;
 import org.incendo.interfaces.paper.transform.PaperTransform;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+import party.morino.maturi.game.AbstractGui;
+import party.morino.maturi.game.syateki.Syateki;
+import party.morino.maturi.game.syateki.SyatekiManager;
+import party.morino.maturi.game.syateki.data.SyatekiResult;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class SyatekiRankingMenu extends AbstractGui {
 
     private final SyatekiManager syatekiManager;

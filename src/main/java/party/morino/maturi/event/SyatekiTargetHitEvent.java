@@ -1,20 +1,19 @@
 package party.morino.maturi.event;
 
-import party.morino.maturi.game.Gamer;
-import party.morino.maturi.game.syateki.Syateki;
 import io.papermc.paper.event.block.TargetHitEvent;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.HandlerList;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
+import party.morino.maturi.game.Gamer;
+import party.morino.maturi.game.syateki.Syateki;
 
 /**
  * Called when a {@link Gamer} in {@link Syateki} shoots a Target block.
  */
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class SyatekiTargetHitEvent extends TargetHitEvent {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();

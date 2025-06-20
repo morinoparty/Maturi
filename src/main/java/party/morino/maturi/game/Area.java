@@ -1,8 +1,7 @@
 package party.morino.maturi.game;
 
 import org.bukkit.Location;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 /**
@@ -10,7 +9,7 @@ import org.spongepowered.configurate.objectmapping.ConfigSerializable;
  * @param firstCorner the first corner
  * @param secondCorner the second corner
  */
-@DefaultQualifier(NonNull.class)
+@NullMarked
 @ConfigSerializable
 public record Area(
         Location firstCorner,

@@ -1,17 +1,16 @@
 package party.morino.maturi.config.primary;
 
-import party.morino.maturi.game.syateki.data.SyatekiArea;
-import party.morino.maturi.game.LootTable;
-import party.morino.maturi.util.Range;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import party.morino.maturi.game.LootTable;
+import party.morino.maturi.game.syateki.data.SyatekiArea;
+import party.morino.maturi.util.Range;
 
 import java.util.List;
 
 @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
 @ConfigSerializable
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public class SyatekiSettings {
 
     private int entranceFee = 0;

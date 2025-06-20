@@ -1,15 +1,14 @@
 package party.morino.maturi.listener;
 
 import com.google.inject.Inject;
-import party.morino.maturi.config.ConfigFactory;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
+import party.morino.maturi.config.ConfigFactory;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class MaturiListener implements Listener {
 
     private final ConfigFactory configFactory;

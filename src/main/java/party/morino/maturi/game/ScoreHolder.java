@@ -1,9 +1,8 @@
 package party.morino.maturi.game;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class ScoreHolder {
 
     private int score = 0;

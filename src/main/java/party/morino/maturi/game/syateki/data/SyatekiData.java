@@ -1,5 +1,6 @@
 package party.morino.maturi.game.syateki.data;
 
+import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.game.GameData;
 import party.morino.maturi.game.Gamer;
 import party.morino.maturi.game.syateki.Syateki;
@@ -17,6 +18,7 @@ import java.util.UUID;
  *
  * @param difficulty           the difficulty
  */
+@NullMarked
 public record SyatekiData(
         UUID uuid,
         List<Gamer> gamers,

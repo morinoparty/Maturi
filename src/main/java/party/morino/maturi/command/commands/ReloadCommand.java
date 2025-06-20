@@ -3,19 +3,18 @@ package party.morino.maturi.command.commands;
 import com.google.inject.Inject;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.ArgumentBuilder;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.command.MaturiCommand;
 import party.morino.maturi.config.ConfigFactory;
 import party.morino.maturi.game.syateki.SyatekiManager;
 import party.morino.maturi.message.Messages;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
 
 import static io.papermc.paper.command.brigadier.Commands.literal;
 
 @SuppressWarnings("UnstableApiUsage")
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class ReloadCommand implements MaturiCommand {
 
     private final ConfigFactory configFactory;

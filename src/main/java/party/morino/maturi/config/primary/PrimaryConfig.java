@@ -1,16 +1,15 @@
 package party.morino.maturi.config.primary;
 
-import party.morino.maturi.game.syateki.Syateki;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
+import party.morino.maturi.game.syateki.Syateki;
 
 import java.util.Map;
 
 @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
 @ConfigSerializable
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public class PrimaryConfig {
 
     @Comment("""

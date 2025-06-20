@@ -3,9 +3,8 @@ package party.morino.maturi.config.serialisation;
 import com.google.inject.Inject;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializer;
@@ -13,7 +12,7 @@ import org.spongepowered.configurate.serialize.TypeSerializer;
 import java.lang.reflect.Type;
 import java.util.Base64;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class ItemStackSerializer implements TypeSerializer<ItemStack> {
 
     private final ComponentLogger logger;

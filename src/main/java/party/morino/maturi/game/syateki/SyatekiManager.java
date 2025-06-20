@@ -2,23 +2,22 @@ package party.morino.maturi.game.syateki;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.UnmodifiableView;
+import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.config.json.JsonManager;
 import party.morino.maturi.game.Gamer;
 import party.morino.maturi.game.syateki.data.SyatekiPersonalData;
 import party.morino.maturi.game.syateki.data.SyatekiResult;
 import party.morino.maturi.util.Pair;
-import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.bukkit.entity.Player;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
-import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 @Singleton
 public final class SyatekiManager {
 

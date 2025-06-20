@@ -1,5 +1,6 @@
 package party.morino.maturi.event;
 
+import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.game.syateki.Syateki;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -8,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Event called before the {@link Syateki} countdown begins.
  */
+@NullMarked
 public class SyatekiPreCountdownEvent extends Event {
 
     private final Syateki syateki;

@@ -6,17 +6,19 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.config.ConfigFactory;
 import party.morino.maturi.game.Gamer;
 import party.morino.maturi.game.syateki.data.SyatekiData;
 import party.morino.maturi.util.MoneyUtils;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 @Singleton
 public final class SyatekiHandler {
 

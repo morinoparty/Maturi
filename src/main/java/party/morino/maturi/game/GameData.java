@@ -1,6 +1,7 @@
 package party.morino.maturi.game;
 
 import org.bukkit.entity.Player;
+import org.jspecify.annotations.NullMarked;
 
 import java.time.Duration;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.UUID;
 /**
  * Interface representing the data required to start a game.
  */
+@NullMarked
 public interface GameData {
     /**
      * Returns the unique identifier for the game.

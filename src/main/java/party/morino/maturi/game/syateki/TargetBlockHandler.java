@@ -1,9 +1,6 @@
 package party.morino.maturi.game.syateki;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import party.morino.maturi.MaturiProvider;
-import party.morino.maturi.game.Area;
-import party.morino.maturi.util.Style;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import org.bukkit.Bukkit;
@@ -11,13 +8,15 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
+import party.morino.maturi.MaturiProvider;
+import party.morino.maturi.game.Area;
+import party.morino.maturi.util.Style;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class TargetBlockHandler {
 
     private TargetBlockHandler() {

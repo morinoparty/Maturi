@@ -1,5 +1,6 @@
 package party.morino.maturi.game.syateki.data;
 
+import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.game.syateki.Syateki;
 
 import java.time.Instant;
@@ -10,6 +11,7 @@ import java.time.Instant;
  * @param played the played
  * @param point the point
  */
+@NullMarked
 public record SyatekiResult(
         SyatekiData syatekiData,
         Instant played,

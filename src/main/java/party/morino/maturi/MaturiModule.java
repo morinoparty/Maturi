@@ -3,14 +3,13 @@ package party.morino.maturi;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.google.inject.multibindings.Multibinder;
-import party.morino.maturi.listener.MaturiListener;
-import party.morino.maturi.listener.SyatekiListener;
 import org.bukkit.Server;
 import org.bukkit.event.Listener;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
+import party.morino.maturi.listener.MaturiListener;
+import party.morino.maturi.listener.SyatekiListener;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class MaturiModule extends AbstractModule {
 
     private final Maturi maturi;

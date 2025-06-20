@@ -1,10 +1,9 @@
 package party.morino.maturi.util;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 @ConfigSerializable
 public record Pair<A, B>(
         A first,

@@ -1,15 +1,14 @@
 package party.morino.maturi.compat;
 
 import com.google.inject.Singleton;
-import party.morino.maturi.Maturi;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.NullMarked;
+import party.morino.maturi.Maturi;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 @Singleton
 public final class EconomyProvider {
 

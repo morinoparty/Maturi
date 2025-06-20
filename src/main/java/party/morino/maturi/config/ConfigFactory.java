@@ -2,28 +2,27 @@ package party.morino.maturi.config;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import party.morino.maturi.config.primary.PrimaryConfig;
-import party.morino.maturi.config.serialisation.ItemStackSerializer;
-import party.morino.maturi.config.serialisation.LocationSerializer;
 import net.kyori.adventure.serializer.configurate4.ConfigurateComponentSerializer;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 import org.spongepowered.configurate.loader.ConfigurationLoader;
+import party.morino.maturi.config.primary.PrimaryConfig;
+import party.morino.maturi.config.serialisation.ItemStackSerializer;
+import party.morino.maturi.config.serialisation.LocationSerializer;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Singleton
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class ConfigFactory {
 
     private static final String PRIMARY_CONFIG_FILE_NAME = "config.conf";

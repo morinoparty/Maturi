@@ -6,14 +6,13 @@ import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.translation.GlobalTranslator;
 import org.bukkit.Bukkit;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.MaturiProvider;
 
 import java.time.Duration;
 import java.util.*;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class SideBar {
 
     private final GameData gameData;

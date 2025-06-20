@@ -12,10 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTables;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
 import org.joml.Matrix4f;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import party.morino.maturi.config.ConfigFactory;
 import party.morino.maturi.game.Gamer;
 import party.morino.maturi.game.kakigoori.data.KakigooriData;
@@ -23,7 +22,7 @@ import party.morino.maturi.util.MoneyUtils;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 @Singleton
 public final class KakigooriHandler {
 

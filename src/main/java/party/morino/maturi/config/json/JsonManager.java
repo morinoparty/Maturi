@@ -27,7 +27,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class JsonManager {
 
     private final Path resultDirectory;

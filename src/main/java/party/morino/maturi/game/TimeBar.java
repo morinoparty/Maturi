@@ -1,18 +1,17 @@
 package party.morino.maturi.game;
 
-import party.morino.maturi.Maturi;
-import party.morino.maturi.MaturiProvider;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+import party.morino.maturi.Maturi;
+import party.morino.maturi.MaturiProvider;
 
 import java.time.Duration;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class TimeBar {
 
     private final Maturi maturi;

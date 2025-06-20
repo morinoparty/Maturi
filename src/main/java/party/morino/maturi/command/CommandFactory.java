@@ -3,9 +3,6 @@ package party.morino.maturi.command;
 import com.google.inject.Inject;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import party.morino.maturi.command.commands.KakigooriCommand;
-import party.morino.maturi.command.commands.ReloadCommand;
-import party.morino.maturi.command.commands.SyatekiCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
@@ -13,13 +10,15 @@ import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
+import party.morino.maturi.command.commands.KakigooriCommand;
+import party.morino.maturi.command.commands.ReloadCommand;
+import party.morino.maturi.command.commands.SyatekiCommand;
 
 import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class CommandFactory {
 
     private final KakigooriCommand kakigooriCommand;

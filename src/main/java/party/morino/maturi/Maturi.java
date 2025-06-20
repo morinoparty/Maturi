@@ -1,18 +1,17 @@
 package party.morino.maturi;
 
 import com.google.inject.*;
-import party.morino.maturi.command.CommandFactory;
-import party.morino.maturi.compat.EconomyProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
 import org.incendo.interfaces.paper.PaperInterfaceListeners;
+import org.jspecify.annotations.NullMarked;
+import party.morino.maturi.command.CommandFactory;
+import party.morino.maturi.compat.EconomyProvider;
 
 import java.util.Set;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 @Singleton
 public final class Maturi extends JavaPlugin {
 

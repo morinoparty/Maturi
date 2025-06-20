@@ -4,13 +4,13 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
 import java.io.IOException;
 import java.util.UUID;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public class UUIDAdapter extends TypeAdapter<UUID> {
 
     public UUIDAdapter() {

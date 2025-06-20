@@ -3,7 +3,6 @@ package party.morino.maturi.game.syateki.gui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
 import org.incendo.interfaces.core.Interface;
 import org.incendo.interfaces.core.UpdatingInterface;
 import org.incendo.interfaces.core.arguments.HashMapInterfaceArguments;
@@ -22,6 +21,7 @@ import org.incendo.interfaces.paper.type.Clickable;
 import org.incendo.interfaces.paper.type.CloseHandler;
 import org.incendo.interfaces.paper.view.ChestView;
 import org.incendo.interfaces.paper.view.PlayerView;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Functions exactly the same as {@link ChestInterface}.
  */
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class ReChestInterface implements ChildTitledInterface<ChestPane, PlayerViewer>, UpdatingInterface, Clickable<ChestPane, InventoryClickEvent, PlayerViewer> {
 
     private final int rows;

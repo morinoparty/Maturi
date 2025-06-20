@@ -1,7 +1,9 @@
 package party.morino.maturi.util;
 
+import org.jspecify.annotations.NullMarked;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
+@NullMarked
 @ConfigSerializable
 public record Range<N extends Comparable<N>>(N min, N max) {
 

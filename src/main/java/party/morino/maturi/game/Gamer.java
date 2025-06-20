@@ -6,10 +6,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -19,7 +18,7 @@ import java.util.UUID;
  *
  * @param uuid the unique identifier for the gamer
  */
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public record Gamer(UUID uuid) implements Audience, ForwardingAudience.Single {
 
     /**

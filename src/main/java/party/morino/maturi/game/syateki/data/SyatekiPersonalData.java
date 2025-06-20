@@ -1,11 +1,10 @@
 package party.morino.maturi.game.syateki.data;
 
+import org.jetbrains.annotations.UnmodifiableView;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import party.morino.maturi.game.Gamer;
 import party.morino.maturi.game.syateki.Syateki;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
-import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -15,7 +14,7 @@ import java.util.Map;
  * Represents personal results for a {@link Gamer} in the {@link Syateki} game.
  * Stores the number of times played and the best results per difficulty level.
  */
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class SyatekiPersonalData {
 
     private final Gamer gamer;

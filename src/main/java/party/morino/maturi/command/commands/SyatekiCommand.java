@@ -3,18 +3,17 @@ package party.morino.maturi.command.commands;
 import com.google.inject.Inject;
 import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
+import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
+import org.bukkit.entity.Player;
+import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.command.MaturiCommand;
 import party.morino.maturi.command.arguments.EnumArgument;
 import party.morino.maturi.game.Gamer;
 import party.morino.maturi.game.syateki.Syateki;
 import party.morino.maturi.game.syateki.SyatekiHandler;
 import party.morino.maturi.game.syateki.gui.SyatekiRankingMenu;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
-import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
-import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
-import org.bukkit.entity.Player;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
 
 import java.time.Duration;
 
@@ -22,7 +21,7 @@ import static io.papermc.paper.command.brigadier.Commands.argument;
 import static io.papermc.paper.command.brigadier.Commands.literal;
 
 @SuppressWarnings("UnstableApiUsage")
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class SyatekiCommand implements MaturiCommand {
 
     private final SyatekiHandler syatekiHandler;

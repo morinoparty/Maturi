@@ -1,8 +1,6 @@
 package party.morino.maturi.game.kakigoori;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import party.morino.maturi.MaturiProvider;
-import party.morino.maturi.game.kakigoori.data.KakigooriData;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import org.bukkit.Bukkit;
@@ -14,12 +12,13 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
 import org.joml.Matrix4f;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+import party.morino.maturi.MaturiProvider;
+import party.morino.maturi.game.kakigoori.data.KakigooriData;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class Kakigoori {
 
     private final KakigooriData kakigooriData;

@@ -14,8 +14,7 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.event.SyatekiEndEvent;
 import party.morino.maturi.event.SyatekiPreCountdownEvent;
 import party.morino.maturi.event.SyatekiTargetHitEvent;
@@ -26,7 +25,7 @@ import party.morino.maturi.util.Style;
 
 import java.util.Objects;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class SyatekiListener implements Listener {
 
     private final SyatekiManager syatekiManager;

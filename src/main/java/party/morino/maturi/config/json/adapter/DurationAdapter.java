@@ -3,13 +3,12 @@ package party.morino.maturi.config.json.adapter;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 import java.time.Duration;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class DurationAdapter extends TypeAdapter<Duration> {
 
     @Override

@@ -1,11 +1,10 @@
 package party.morino.maturi.util;
 
-import party.morino.maturi.game.Gamer;
+import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.compat.EconomyProvider;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import party.morino.maturi.game.Gamer;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class MoneyUtils {
 
     private MoneyUtils() {

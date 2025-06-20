@@ -15,9 +15,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Repairable;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import party.morino.maturi.Maturi;
 import party.morino.maturi.MaturiProvider;
 import party.morino.maturi.event.SyatekiEndEvent;
@@ -33,7 +32,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class Syateki {
 
     private final Maturi maturi;

@@ -2,21 +2,20 @@ package party.morino.maturi.command.commands;
 
 import com.google.inject.Inject;
 import com.mojang.brigadier.builder.ArgumentBuilder;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
+import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
+import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.command.MaturiCommand;
 import party.morino.maturi.command.arguments.EnumArgument;
 import party.morino.maturi.game.kakigoori.KakigooriHandler;
 import party.morino.maturi.game.kakigoori.ShavedIce;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
-import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
-import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
 
 import static io.papermc.paper.command.brigadier.Commands.argument;
 import static io.papermc.paper.command.brigadier.Commands.literal;
 
 @SuppressWarnings("UnstableApiUsage")
-@DefaultQualifier(NonNull.class)
+@NullMarked
 public final class KakigooriCommand implements MaturiCommand {
 
     private final KakigooriHandler kakigooriHandler;

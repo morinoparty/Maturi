@@ -1,11 +1,10 @@
 package party.morino.maturi;
 
 import com.google.inject.Singleton;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
-@DefaultQualifier(NonNull.class)
+@NullMarked
 @Singleton
 public final class MaturiProvider {
 
