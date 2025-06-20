@@ -3,9 +3,8 @@ package party.morino.maturi.config.json.adapter;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jspecify.annotations.NullMarked;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.UUID;

@@ -5,7 +5,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import party.morino.maturi.Maturi;
 
 @NullMarked
