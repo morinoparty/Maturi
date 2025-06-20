@@ -2,11 +2,7 @@ package party.morino.maturi.game.kakigoori;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import party.morino.maturi.config.ConfigFactory;
-import party.morino.maturi.game.Gamer;
-import party.morino.maturi.game.kakigoori.data.KakigooriData;
-import party.morino.maturi.message.Messages;
-import party.morino.maturi.util.MoneyUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -20,6 +16,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
 import org.joml.Matrix4f;
+import party.morino.maturi.config.ConfigFactory;
+import party.morino.maturi.game.Gamer;
+import party.morino.maturi.game.kakigoori.data.KakigooriData;
+import party.morino.maturi.util.MoneyUtils;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -47,7 +47,7 @@ public final class KakigooriHandler {
         final var settings = this.configFactory.primaryConfig().kakigoori();
         final var prize = settings.prize();
         if (!MoneyUtils.hasEnoughMoney(purchaser, 100)) {
-            purchaser.sendMessage(Messages.translate("maturi.not_enough_money", purchaser));
+            purchaser.sendMessage(Component.translatable("maturi.not_enough_money"));
             return;
         }
 

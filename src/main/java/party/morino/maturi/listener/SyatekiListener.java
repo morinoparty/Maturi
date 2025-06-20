@@ -2,15 +2,8 @@ package party.morino.maturi.listener;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import com.google.inject.Inject;
-import party.morino.maturi.event.SyatekiEndEvent;
-import party.morino.maturi.event.SyatekiPreCountdownEvent;
-import party.morino.maturi.event.SyatekiTargetHitEvent;
-import party.morino.maturi.game.Gamer;
-import party.morino.maturi.game.syateki.SyatekiHandler;
-import party.morino.maturi.game.syateki.SyatekiManager;
-import party.morino.maturi.message.Messages;
-import party.morino.maturi.util.Style;
 import io.papermc.paper.event.block.TargetHitEvent;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -23,6 +16,13 @@ import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
+import party.morino.maturi.event.SyatekiEndEvent;
+import party.morino.maturi.event.SyatekiPreCountdownEvent;
+import party.morino.maturi.event.SyatekiTargetHitEvent;
+import party.morino.maturi.game.Gamer;
+import party.morino.maturi.game.syateki.SyatekiHandler;
+import party.morino.maturi.game.syateki.SyatekiManager;
+import party.morino.maturi.util.Style;
 
 import java.util.Objects;
 
@@ -61,7 +61,7 @@ public final class SyatekiListener implements Listener {
             return;
         }
 
-        player.sendMessage(Messages.translate("syateki.game.command_cancelled", player));
+        player.sendMessage(Component.translatable("syateki.game.command_cancelled"));
         event.setCancelled(true);
     }
 

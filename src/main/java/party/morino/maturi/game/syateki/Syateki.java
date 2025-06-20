@@ -1,24 +1,10 @@
 package party.morino.maturi.game.syateki;
 
-import party.morino.maturi.Maturi;
-import party.morino.maturi.MaturiProvider;
-import party.morino.maturi.event.SyatekiEndEvent;
-import party.morino.maturi.event.SyatekiPreCountdownEvent;
-import party.morino.maturi.event.SyatekiStartEvent;
-import party.morino.maturi.game.Gamer;
-import party.morino.maturi.game.ScoreHolder;
-import party.morino.maturi.game.SideBar;
-import party.morino.maturi.game.TimeBar;
-import party.morino.maturi.game.syateki.data.SyatekiData;
-import party.morino.maturi.game.LootTable;
-import party.morino.maturi.game.syateki.data.SyatekiResult;
-import party.morino.maturi.message.Messages;
-import party.morino.maturi.util.CommandExecutor;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -32,6 +18,15 @@ import org.bukkit.scheduler.BukkitTask;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
+import party.morino.maturi.Maturi;
+import party.morino.maturi.MaturiProvider;
+import party.morino.maturi.event.SyatekiEndEvent;
+import party.morino.maturi.event.SyatekiPreCountdownEvent;
+import party.morino.maturi.event.SyatekiStartEvent;
+import party.morino.maturi.game.*;
+import party.morino.maturi.game.syateki.data.SyatekiData;
+import party.morino.maturi.game.syateki.data.SyatekiResult;
+import party.morino.maturi.util.CommandExecutor;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -131,7 +126,11 @@ public final class Syateki {
                                 .pitch(0.5f)
                                 .volume(0.3f)
                                 .build();
-                        player.showTitle(Title.title(Component.empty(), Messages.translate("syateki.start.countdown", player, builder -> builder.tag("time", Tag.inserting(Component.text(this.timer))))));
+                        player.showTitle(
+                                Title.title(
+                                        Component.empty(),
+                                        Component.translatable("syateki.start.countdown", Argument.numeric("time", this.timer))
+                                ));
                         player.playSound(sound);
                     });
                 } else {
@@ -161,7 +160,7 @@ public final class Syateki {
                     .type(Key.key("minecraft:block.trial_spawner.eject_item"))
                     .pitch(1.25f)
                     .build();
-            player.showTitle(Title.title(Component.empty(), Messages.translate("syateki.start.sub_title", player)));
+            player.showTitle(Title.title(Component.empty(), Component.translatable("syateki.start.sub_title")));
             player.playSound(sound);
         });
 
@@ -191,8 +190,8 @@ public final class Syateki {
                     .pitch(1.25f)
                     .volume(0.5f)
                     .build();
-            player.showTitle(Title.title(Component.empty(), Messages.translate("syateki.end.sub_title", player)));
-            player.sendMessage(Messages.translate("syateki.end.point_announce", player, builder -> builder.tag("point", Tag.selfClosingInserting(Component.text(this.scoreHolder.score())))));
+            player.showTitle(Title.title(Component.empty(), Component.translatable("syateki.end.sub_title")));
+            player.sendMessage(Component.translatable("syateki.end.point_announce", Argument.numeric("point", this.scoreHolder.score())));
             player.playSound(sound);
         });
         this.selectLoot();

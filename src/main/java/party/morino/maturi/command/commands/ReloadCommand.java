@@ -3,6 +3,7 @@ package party.morino.maturi.command.commands;
 import com.google.inject.Inject;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.ArgumentBuilder;
+import net.kyori.adventure.text.Component;
 import party.morino.maturi.command.MaturiCommand;
 import party.morino.maturi.config.ConfigFactory;
 import party.morino.maturi.game.syateki.SyatekiManager;
@@ -42,7 +43,7 @@ public final class ReloadCommand implements MaturiCommand {
                     this.messages.reloadMessage();
                     this.syatekiManager.reload();
 
-                    sender.sendMessage(Messages.translate("command.reload.success.reload", sender));
+                    sender.sendMessage(Component.translatable("command.reload.success.reload"));
 
                     return Command.SINGLE_SUCCESS;
                 });

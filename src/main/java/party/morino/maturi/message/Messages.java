@@ -2,23 +2,17 @@ package party.morino.maturi.message;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.identity.Identity;
+import io.papermc.paper.plugin.configuration.PluginMeta;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.Tag;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.minimessage.translation.MiniMessageTranslationStore;
 import net.kyori.adventure.translation.GlobalTranslator;
-import net.kyori.adventure.translation.TranslationRegistry;
 import net.kyori.adventure.translation.Translator;
 import net.kyori.adventure.util.UTF8ResourceBundleControl;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
-import org.jetbrains.annotations.PropertyKey;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,13 +20,12 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.MessageFormat;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@SuppressWarnings({"UnstableApiUsage", "PatternValidation"})
 @DefaultQualifier(NonNull.class)
 @Singleton
 public final class Messages {
@@ -40,34 +33,27 @@ public final class Messages {
     private final ComponentLogger logger;
     private final Path messagesDir;
 
-    private static final String PREFIX = "<white>[<gradient:#005aa7:#fffde4>Maturi</gradient>]</white>";
-    private static final String BUNDLE = "locale.messages";
-    private static final Key key = Key.key("maturi", "translation");
-
     private final Map<Locale, ResourceBundle> locales = new HashMap<>();
-    private final Map<Locale, String> defaultLocales = Map.of(
+    private final Map<Locale, String> supportedLocales = Map.of(
             Locale.JAPAN, "messages_ja_JP",
             Locale.US, "messages_en_US"
     );
     private final Pattern pattern = Pattern.compile("messages_(.+)\\.properties");
+    private static final String PREFIX = "<white>[<gradient:#005aa7:#fffde4>Maturi</gradient>]</white>";
 
-    private TranslationRegistry registry = TranslationRegistry.create(key);
+    private final Key registryKey;
+    private MiniMessageTranslationStore translationRegistry;
 
     @Inject
     public Messages(
             final Path dataDirectory,
-            final ComponentLogger logger
+            final ComponentLogger logger,
+            final PluginMeta pluginMeta
     ) {
         this.logger = logger;
         this.messagesDir = dataDirectory.resolve("locale");
-
-        if (!Files.exists(this.messagesDir)) {
-            try {
-                Files.createDirectories(this.messagesDir);
-            } catch (final IOException e) {
-                this.logger.error(String.format("Failed to create directory %s", this.messagesDir), e);
-            }
-        }
+        this.registryKey = Key.key(pluginMeta.getName().toLowerCase(), "translation");
+        this.translationRegistry = MiniMessageTranslationStore.create(this.registryKey);
 
         this.reloadMessage();
     }
@@ -80,8 +66,17 @@ public final class Messages {
 
     private void loadMessageFile() {
         // Create registry
-        GlobalTranslator.translator().removeSource(this.registry);
-        this.registry = TranslationRegistry.create(key);
+        GlobalTranslator.translator().removeSource(this.translationRegistry);
+        this.translationRegistry = MiniMessageTranslationStore.create(this.registryKey);
+        this.translationRegistry.defaultLocale(Locale.US);
+
+        if (!Files.exists(this.messagesDir)) {
+            try {
+                Files.createDirectories(this.messagesDir);
+            } catch (final IOException e) {
+                this.logger.error(String.format("Failed to create directory %s", this.messagesDir), e);
+            }
+        }
 
         // Create supported locales
         this.createSupportedLocales(this.messagesDir);
@@ -89,19 +84,20 @@ public final class Messages {
         // Load messages_*.properties locale
         try (final Stream<Path> paths = Files.list(this.messagesDir)) {
             paths.filter(Files::isRegularFile)
+                    .filter(file -> file.getFileName().toString().endsWith(".properties"))
                     .forEach(this::loadMatchFile);
         } catch (final IOException e) {
             this.logger.error("Failed to load locales.", e);
         }
 
         // Register translator
-        GlobalTranslator.translator().addSource(this.registry);
+        GlobalTranslator.translator().addSource(this.translationRegistry);
 
         this.logger.info("Successfully {} locales loaded! {}", this.locales.keySet().size(), this.locales.keySet());
     }
 
     private void createSupportedLocales(final Path path) {
-        for (final Map.Entry<Locale, String> localesEntry : this.defaultLocales.entrySet()) {
+        for (final Map.Entry<Locale, String> localesEntry : this.supportedLocales.entrySet()) {
             final var locale = localesEntry.getKey();
             final var fileName = localesEntry.getValue();
             final var localePath = path.resolve(fileName + ".properties");
@@ -116,7 +112,7 @@ public final class Messages {
     private void createProperties(final Path path, final ResourceBundle bundle) {
         final var properties = new Properties() {
             @Override
-            public synchronized Set<Map.Entry<Object, Object>> entrySet() {
+            public synchronized @NotNull Set<Map.Entry<Object, Object>> entrySet() {
                 return Collections.unmodifiableSet(
                         (Set<? extends Map.Entry<Object, Object>>) super.entrySet()
                                 .stream()
@@ -124,13 +120,14 @@ public final class Messages {
                                 .collect(Collectors.toCollection(LinkedHashSet::new)));
             }
         };
-        try (final Writer outputStream = Files.newBufferedWriter(path)) {
+
+        try (final Writer writer = Files.newBufferedWriter(path)) {
             properties.putAll(bundle.keySet().stream()
                     .collect(Collectors.toMap(key1 -> key1, bundle::getString)));
-            properties.store(outputStream, null);
+            properties.store(writer, null);
             this.logger.info("Successfully '{}' created!", path.getFileName());
         } catch (final IOException e) {
-            this.logger.error("Failed to create '{}' locales.", bundle.getLocale(), e);
+            this.logger.error("Failed to create '{}'", path.getFileName(), e);
         }
     }
 
@@ -140,7 +137,7 @@ public final class Messages {
             final @Nullable Locale locale = Translator.parseLocale(matcher.group(1));
 
             if (locale == null) {
-                this.logger.warn("Invalid locales {}", path.getFileName());
+                this.logger.warn("Invalid locale file: {}", path.getFileName());
             } else {
                 this.load(locale, path);
             }
@@ -151,48 +148,9 @@ public final class Messages {
         try (final BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             final var bundle = new PropertyResourceBundle(reader);
             this.locales.put(locale, bundle);
-            this.registry.registerAll(locale, bundle, false);
+            this.translationRegistry.registerAll(locale, bundle, false);
         } catch (final Exception e) {
             this.logger.error(String.format("Failed to load %s", path.getFileName()), e);
         }
-    }
-
-    // GlobalTranslator
-
-    /**
-     * Simple translation message that resolves prefix.
-     * @param key the key
-     * @param audience the audience
-     * @return the translatable message or key if message not found
-     */
-    public static Component translate(final @PropertyKey(resourceBundle = BUNDLE) String key, final Audience audience) {
-        return format(key, audience, TagResolver.empty());
-    }
-
-    /**
-     * Simple translation message with {@link TagResolver} including prefix.
-     * @param key the key
-     * @param audience the audience
-     * @param builder the tagResolver builder
-     * @return the translatable message or key if message not found
-     */
-    public static Component translate(final @PropertyKey(resourceBundle = BUNDLE) String key, final Audience audience, final Consumer<TagResolver.Builder> builder) {
-        final var tagResolver = TagResolver.builder();
-        builder.accept(tagResolver);
-        return format(key, audience, tagResolver.build());
-    }
-
-    private static Component format(final @PropertyKey(resourceBundle = BUNDLE) String key, final Audience audience, final TagResolver tagResolver) {
-        final var withPrefixTagResolver = TagResolver.builder()
-                .tag("prefix", Tag.selfClosingInserting(MiniMessage.miniMessage().deserialize(PREFIX)))
-                .resolver(tagResolver)
-                .build();
-        final var component = Component.empty()
-                .decoration(TextDecoration.ITALIC, false);
-        final @Nullable MessageFormat message = GlobalTranslator.translator().translate(key, audience.pointers().getOrDefault(Identity.LOCALE, Locale.US));
-
-        return message != null
-                ? component.append(MiniMessage.miniMessage().deserialize(message.toPattern(), withPrefixTagResolver))
-                : component.append(Component.text(key));
     }
 }

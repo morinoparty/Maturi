@@ -2,12 +2,13 @@ package party.morino.maturi.game;
 
 
 import fr.mrmicky.fastboard.adventure.FastBoard;
-import party.morino.maturi.MaturiProvider;
-import party.morino.maturi.message.Messages;
+import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.translation.GlobalTranslator;
 import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
+import party.morino.maturi.MaturiProvider;
 
 import java.time.Duration;
 import java.util.*;
@@ -25,7 +26,7 @@ public final class SideBar {
     public void enable() {
         this.gameData.players().forEach(player -> {
             final var board = new FastBoard(player);
-            board.updateTitle(Messages.translate("syateki.game.board_title", player));
+            board.updateTitle(Component.translatable("syateki.game.board_title"));
             this.boardMap.put(player.getUniqueId(), board);
         });
     }
@@ -39,7 +40,10 @@ public final class SideBar {
         this.boardMap.clear();
     }
 
-    public void update(final List<Component> lines) {
-        this.boardMap.values().forEach(board -> board.updateLines(lines));
+    public void update(final List<Component> lines, final Gamer gamer) {
+        final List<Component> renderLines = lines.stream()
+                .map(line -> GlobalTranslator.renderer().render(line, gamer.getOrDefault(Identity.LOCALE, Locale.US)))
+                .toList();
+        this.boardMap.values().forEach(board -> board.updateLines(renderLines));
     }
 }

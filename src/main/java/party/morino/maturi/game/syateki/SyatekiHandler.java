@@ -2,23 +2,19 @@ package party.morino.maturi.game.syateki;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import party.morino.maturi.config.ConfigFactory;
-import party.morino.maturi.game.Gamer;
-import party.morino.maturi.game.syateki.data.SyatekiData;
-import party.morino.maturi.message.Messages;
-import party.morino.maturi.util.MoneyUtils;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
+import party.morino.maturi.config.ConfigFactory;
+import party.morino.maturi.game.Gamer;
+import party.morino.maturi.game.syateki.data.SyatekiData;
+import party.morino.maturi.util.MoneyUtils;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @DefaultQualifier(NonNull.class)
 @Singleton
@@ -42,27 +38,27 @@ public final class SyatekiHandler {
         final var settings = this.configFactory.primaryConfig().syateki(difficulty);
         // ゲーム中であればリターン
         if (gamers.stream().anyMatch(this.syatekiManager::hasActiveGame)) {
-            gamers.forEach(gamer -> gamer.sendMessage(Messages.translate("syateki.start.alredy_start", gamer)));
+            gamers.forEach(gamer -> gamer.sendMessage(Component.translatable("syateki.start.alredy_start")));
             return;
         }
 
         // インベントリが空でなければリターン
         if (gamers.stream().anyMatch(gamer -> !gamer.isInventoryEmpty())) {
-            gamers.forEach(gamer -> gamer.sendMessage(Messages.translate("syateki.start.inventory_not_empty", gamer)));
+            gamers.forEach(gamer -> gamer.sendMessage(Component.translatable("syateki.start.inventory_not_empty")));
             return;
         }
 
         // 設定されているエリア数よりもアクティブ数の方が多ければリターン
         final var areas = settings.areas();
         if (areas.size() <= this.syatekiManager.actives(difficulty)) {
-            gamers.forEach(gamer -> gamer.sendMessage(Messages.translate("syateki.start.not_found_area", gamer)));
+            gamers.forEach(gamer -> gamer.sendMessage(Component.translatable("syateki.start.not_found_area")));
             return;
         }
 
         // 開始するための必要なお金を持っていなければリターン
         final var fee = settings.entranceFee();
         if (gamers.stream().anyMatch(gamer -> !MoneyUtils.hasEnoughMoney(gamer, fee))) {
-            gamers.forEach(gamer -> gamer.sendMessage(Messages.translate("maturi.not_enough_money", gamer)));
+            gamers.forEach(gamer -> gamer.sendMessage(Component.translatable("maturi.not_enough_money")));
             return;
         }
         gamers.forEach(gamer -> MoneyUtils.takeMoney(gamer, fee));
@@ -86,7 +82,7 @@ public final class SyatekiHandler {
         final var syatekiData = syateki.syatekiData();
         final var restrictedArea = syatekiData.syatekiArea().restrictedArea();
         if (restrictedArea.in(shooterLocation)) {
-            gamer.sendMessage(Messages.translate("syateki.game.in_restricted_area", gamer));
+            gamer.sendMessage(Component.translatable("syateki.game.in_restricted_area"));
             return;
         }
 
@@ -104,8 +100,8 @@ public final class SyatekiHandler {
 
         scoreHolder.increment(score);
 
-        final var list = List.of(Messages.translate("syateki.game.point", gamer, builder -> builder.tag("point", Tag.selfClosingInserting(Component.text(scoreHolder.score())))));
-        syateki.sideBar().update(list);
-        gamer.showTitle(Title.title(Component.empty(), Messages.translate("syateki.game.hit_announce", gamer, builder -> builder.tag("point", Tag.selfClosingInserting(Component.text(score))))));
+        final List<Component> list = List.of(Component.translatable("syateki.game.point", Argument.numeric("point", scoreHolder.score())));
+        syateki.sideBar().update(list, gamer);
+        gamer.showTitle(Title.title(Component.empty(), Component.translatable("syateki.game.hit_announce", Argument.numeric("point", score))));
     }
 }
