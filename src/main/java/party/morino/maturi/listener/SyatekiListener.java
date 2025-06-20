@@ -79,7 +79,6 @@ public final class SyatekiListener implements Listener {
     @EventHandler
     public void onEnd(final SyatekiEndEvent event) {
         this.syatekiManager.removeActive(event.getSyateki());
-        this.syatekiManager.saveResult(event.getSyatekiResult());
     }
 
     @EventHandler

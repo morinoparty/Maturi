@@ -6,10 +6,7 @@ import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.UnmodifiableView;
 import org.jspecify.annotations.NullMarked;
-import party.morino.maturi.config.json.JsonManager;
 import party.morino.maturi.game.Gamer;
-import party.morino.maturi.game.syateki.data.SyatekiPersonalData;
-import party.morino.maturi.game.syateki.data.SyatekiResult;
 import party.morino.maturi.util.Pair;
 
 import java.util.Collections;
@@ -21,29 +18,21 @@ import java.util.Set;
 @Singleton
 public final class SyatekiManager {
 
-    private final JsonManager jsonManager;
     private final ComponentLogger logger;
 
     private final Set<Pair<Syateki.Difficulty, Syateki>> actives = new HashSet<>();
-    private final Set<SyatekiResult> results = new HashSet<>();
-    private final Set<SyatekiPersonalData> personalDataSet = new HashSet<>();
 
     @Inject
     public SyatekiManager(
-            final JsonManager jsonManager,
             final ComponentLogger logger
     ) {
-        this.jsonManager = jsonManager;
         this.logger = logger;
 
         this.reload();
     }
 
     public void reload() {
-        this.loadResults();
-        this.loadPersonalData();
-
-        this.logger.info("{} results, {} personals loaded!", this.results.size(), this.personalDataSet.size());
+        // empty
     }
 
     public void addActive(final Syateki syateki) {
@@ -52,33 +41,6 @@ public final class SyatekiManager {
 
     public void removeActive(final Syateki syateki) {
         this.actives.removeIf(pair -> pair.first().equals(syateki.syatekiData().difficulty()) && pair.second().syatekiData().uuid().equals(syateki.syatekiData().uuid()));
-    }
-
-    private void loadResults() {
-        this.results.clear();
-        this.results.addAll(this.jsonManager.loadResult());
-    }
-
-    public void saveResult(final SyatekiResult result) {
-        this.results.add(result);
-        this.jsonManager.saveResult(result);
-        result.syatekiData().gamers().forEach(gamer -> this.updatePersonalDataIfNeeded(result, gamer));
-    }
-
-    private void updatePersonalDataIfNeeded(final SyatekiResult result, final Gamer gamer) {
-        this.personalDataSet.stream()
-                .filter(data -> data.gamer().equals(gamer))
-                .findFirst()
-                .ifPresentOrElse(data -> this.jsonManager.savePersonalData(data.update(result)), () -> {
-                    final var data = new SyatekiPersonalData(gamer).update(result);
-                    this.personalDataSet.add(data);
-                    this.jsonManager.savePersonalData(data);
-                });
-    }
-
-    private void loadPersonalData() {
-        this.personalDataSet.clear();
-        this.personalDataSet.addAll(this.jsonManager.loadPersonalData());
     }
 
     public boolean hasActiveGame(final Player player) {
@@ -115,15 +77,5 @@ public final class SyatekiManager {
         return (int) this.actives.stream()
                 .filter(pair -> pair.first().equals(difficulty))
                 .count();
-    }
-
-    @UnmodifiableView
-    public Set<SyatekiResult> results() {
-        return Collections.unmodifiableSet(this.results);
-    }
-
-    @UnmodifiableView
-    public Set<SyatekiPersonalData> personalDataSet() {
-        return Collections.unmodifiableSet(this.personalDataSet);
     }
 }
