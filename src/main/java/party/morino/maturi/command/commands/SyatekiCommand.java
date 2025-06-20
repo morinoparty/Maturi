@@ -13,7 +13,6 @@ import party.morino.maturi.command.arguments.EnumArgument;
 import party.morino.maturi.game.Gamer;
 import party.morino.maturi.game.syateki.Syateki;
 import party.morino.maturi.game.syateki.SyatekiHandler;
-import party.morino.maturi.game.syateki.gui.SyatekiRankingMenu;
 
 import java.time.Duration;
 
@@ -25,15 +24,11 @@ import static io.papermc.paper.command.brigadier.Commands.literal;
 public final class SyatekiCommand implements MaturiCommand {
 
     private final SyatekiHandler syatekiHandler;
-    private final SyatekiRankingMenu rankingMenu;
-
     @Inject
     public SyatekiCommand(
-            final SyatekiHandler syatekiHandler,
-            final SyatekiRankingMenu rankingMenu
+            final SyatekiHandler syatekiHandler
     ) {
         this.syatekiHandler = syatekiHandler;
-        this.rankingMenu = rankingMenu;
     }
 
     @Override
@@ -54,13 +49,6 @@ public final class SyatekiCommand implements MaturiCommand {
                                                     final var duration = context.getArgument("duration", long.class);
                                                     this.syatekiHandler.start(difficulty, Duration.ofSeconds(duration), gamers);
                                                     return 1;
-                                                })))))
-                .then(literal("ranking")
-                        .executes(context -> {
-                            if (context.getSource().getSender() instanceof Player player) {
-                                // this.rankingMenu.open(player, Syateki.Difficulty.HARD);
-                            }
-                            return 1;
-                        }));
+                                                })))));
     }
 }

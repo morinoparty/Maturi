@@ -4,7 +4,6 @@ import com.google.inject.*;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.incendo.interfaces.paper.PaperInterfaceListeners;
 import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.command.CommandFactory;
 import party.morino.maturi.compat.EconomyProvider;
@@ -28,7 +27,6 @@ public final class Maturi extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        PaperInterfaceListeners.install(this);
         EconomyProvider.init();
 
         final Set<Listener> listeners = this.injector.getInstance(Key.get(new TypeLiteral<>() {}));
