@@ -89,7 +89,7 @@ public final class Syateki {
     }
 
     public boolean containsPlayer(final Player player) {
-        return this.containsPlayer(new Gamer(player.getUniqueId()));
+        return this.containsPlayer(new Gamer(player.getUniqueId(), player.displayName()));
     }
 
     public boolean containsPlayer(final Gamer gamer) {

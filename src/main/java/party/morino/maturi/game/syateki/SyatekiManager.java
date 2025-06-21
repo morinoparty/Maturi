@@ -44,7 +44,7 @@ public final class SyatekiManager {
     }
 
     public boolean hasActiveGame(final Player player) {
-        return this.hasActiveGame(new Gamer(player.getUniqueId()));
+        return this.hasActiveGame(new Gamer(player.getUniqueId(), player.displayName()));
     }
 
     public boolean hasActiveGame(final Gamer gamer) {

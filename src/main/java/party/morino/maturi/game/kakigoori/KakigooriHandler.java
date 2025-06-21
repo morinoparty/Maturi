@@ -42,7 +42,7 @@ public final class KakigooriHandler {
             return;
         }
 
-        final var purchaser = new Gamer(player.getUniqueId());
+        final var purchaser = new Gamer(player.getUniqueId(), player.displayName());
         final var settings = this.configFactory.primaryConfig().kakigoori();
         final var prize = settings.prize();
         if (!MoneyUtils.hasEnoughMoney(purchaser, 100)) {

@@ -46,7 +46,7 @@ public final class SyatekiListener implements Listener {
         if (event.getEntity().getShooter() instanceof Player player) {
             this.syatekiManager.matchActiveGame(player)
                     .ifPresent(syateki -> {
-                        final var shooter = new Gamer(player.getUniqueId());
+                        final var shooter = new Gamer(player.getUniqueId(), player.displayName());
                         final var syatekiEvent = new SyatekiTargetHitEvent(event.getEntity(), Objects.requireNonNull(event.getHitBlock()), Objects.requireNonNull(event.getHitBlockFace()), event.getSignalStrength(), syateki, shooter);
                         syatekiEvent.callEvent();
                     });

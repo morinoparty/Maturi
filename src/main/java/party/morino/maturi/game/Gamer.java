@@ -2,6 +2,7 @@ package party.morino.maturi.game;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.ForwardingAudience;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -19,7 +20,7 @@ import java.util.UUID;
  * @param uuid the unique identifier for the gamer
  */
 @NullMarked
-public record Gamer(UUID uuid) implements Audience, ForwardingAudience.Single {
+public record Gamer(UUID uuid, Component displayName) implements Audience, ForwardingAudience.Single {
 
     /**
      * Get the player associated with this gamer.

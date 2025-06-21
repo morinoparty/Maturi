@@ -6,7 +6,6 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
-import org.bukkit.entity.Player;
 import org.jspecify.annotations.NullMarked;
 import party.morino.maturi.command.MaturiCommand;
 import party.morino.maturi.command.arguments.EnumArgument;
@@ -43,8 +42,7 @@ public final class SyatekiCommand implements MaturiCommand {
                                                     final var difficulty = context.getArgument("difficulty", Syateki.Difficulty.class);
                                                     final var gamers = context.getArgument("players", PlayerSelectorArgumentResolver.class).resolve(context.getSource())
                                                             .stream()
-                                                            .map(Player::getUniqueId)
-                                                            .map(Gamer::new)
+                                                            .map(player -> new Gamer(player.getUniqueId(), player.displayName()))
                                                             .toList();
                                                     final var duration = context.getArgument("duration", long.class);
                                                     this.syatekiHandler.start(difficulty, Duration.ofSeconds(duration), gamers);
