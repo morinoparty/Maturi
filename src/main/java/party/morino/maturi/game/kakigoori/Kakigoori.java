@@ -43,16 +43,32 @@ public final class Kakigoori {
         }
 
         this.enabled = true;
-        this.handleCreate();
+        this.create();
         return this;
     }
 
-    private void handleRotation() {
+    // 正面180
+    // 135
+    private void create() {
+        final var clerk = this.kakigooriData.clerk();
+        final var cup = this.kakigooriData.display().cup();
+        final var ice = this.kakigooriData.display().ice();
+        ice.setItemStack(ItemStack.of(Material.ICE));
+        clerk.setRotation(120, -10);
+        cup.setItemStack(ShavedIce.make(ShavedIce.Type.CUP));
+        this.playSound(Sound.sound(Key.key("minecraft:entity.evoker.ambient"), Sound.Source.MASTER, 0.2f, 1.75f), this.kakigooriData.clerkLocation());
+        this.playSound(Sound.sound(Key.key("minecraft:block.iron_door.open"), Sound.Source.MASTER, 0.5f, 1.5f), this.kakigooriData.display().iceLocation());
+
+        this.tickTask = Bukkit.getScheduler().runTaskTimer(MaturiProvider.instance(), this::rotation, 1, this.kakigooriData.display().duration());
+        this.nextPhaseTask = Bukkit.getScheduler().runTaskLater(MaturiProvider.instance(), this::createDone, 140);
+    }
+
+    private void rotation() {
         final var ice = this.kakigooriData.display().ice();
         final var handle = this.kakigooriData.display().handle();
         final var iceLoc = this.kakigooriData.display().iceLocation().clone();
 
-        final var rotate = this.mat.rotateY(((float) Math.toRadians(180)) + 0.3F);
+        final var rotate = this.mat.rotateY(((float) Math.toRadians(180)) + 0.2F);
         final var duration = this.kakigooriData.display().duration();
         ice.setTransformationMatrix(rotate);
         ice.setInterpolationDelay(0);
@@ -77,23 +93,7 @@ public final class Kakigoori {
         this.playSound(Sound.sound(Key.key("minecraft:block.sand.break"), Sound.Source.MASTER, 0.2f, 0.75f), iceLoc);
     }
 
-    // 正面180
-    // 135
-    private void handleCreate() {
-        final var clerk = this.kakigooriData.clerk();
-        final var cup = this.kakigooriData.display().cup();
-        final var ice = this.kakigooriData.display().ice();
-        ice.setItemStack(new ItemStack(Material.ICE));
-        clerk.setRotation(120, -10);
-        cup.setItemStack(ShavedIce.make(ShavedIce.Type.CUP));
-        this.playSound(Sound.sound(Key.key("minecraft:entity.evoker.ambient"), Sound.Source.MASTER, 0.2f, 1.75f), this.kakigooriData.clerkLocation());
-        this.playSound(Sound.sound(Key.key("minecraft:block.iron_door.open"), Sound.Source.MASTER, 0.5f, 1.5f), this.kakigooriData.display().iceLocation());
-
-        this.tickTask = Bukkit.getScheduler().runTaskTimer(MaturiProvider.instance(), this::handleRotation, 1, this.kakigooriData.display().duration());
-        this.nextPhaseTask = Bukkit.getScheduler().runTaskLater(MaturiProvider.instance(), this::handleCreateDone, 140);
-    }
-
-    private void handleCreateDone() {
+    private void createDone() {
         final var cup = this.kakigooriData.display().cup();
         final var cupLoc = this.kakigooriData.display().cupLocation();
         cup.setItemStack(ShavedIce.make(ShavedIce.Type.FLAVORLESS));
@@ -104,10 +104,10 @@ public final class Kakigoori {
             this.tickTask = null;
         }
 
-        this.nextPhaseTask = Bukkit.getScheduler().runTaskLater(MaturiProvider.instance(), this::handleTake, 30);
+        this.nextPhaseTask = Bukkit.getScheduler().runTaskLater(MaturiProvider.instance(), this::take, 30);
     }
 
-    private void handleTake() {
+    private void take() {
         final var clerk = this.kakigooriData.clerk();
         final var cup = this.kakigooriData.display().cup();
         final var drop = this.kakigooriData.display().drop();
@@ -116,29 +116,29 @@ public final class Kakigoori {
         cup.setItemStack(ItemStack.empty());
         this.playSound(Sound.sound(Key.key("minecraft:entity.item.pickup"), Sound.Source.MASTER, 0.2f, 1f), clerk.getLocation());
 
-        this.nextPhaseTask = Bukkit.getScheduler().runTaskLater(MaturiProvider.instance(), this::handlePerformanceStart, 30);
+        this.nextPhaseTask = Bukkit.getScheduler().runTaskLater(MaturiProvider.instance(), this::performanceStart, 30);
     }
 
-    private void handlePerformanceStart() {
+    private void performanceStart() {
         final var clerk = this.kakigooriData.clerk();
-        clerk.getEquipment().setItem(EquipmentSlot.HAND, new ItemStack(this.kakigooriData.data().mainMaterial()));
-        clerk.getEquipment().setItem(EquipmentSlot.OFF_HAND, new ItemStack(this.kakigooriData.data().subMaterial()));
+        clerk.getEquipment().setItem(EquipmentSlot.HAND, ItemStack.of(this.kakigooriData.shavedIceData().mainMaterial()));
+        clerk.getEquipment().setItem(EquipmentSlot.OFF_HAND, ItemStack.of(this.kakigooriData.shavedIceData().subMaterial()));
         clerk.setSpell(Spellcaster.Spell.SUMMON_VEX);
 
-        this.tickTask = Bukkit.getScheduler().runTaskTimer(MaturiProvider.instance(), this::handlePerformanceParticle, 8, 8);
-        this.nextPhaseTask = Bukkit.getScheduler().runTaskLater(MaturiProvider.instance(), this::handlePerformanceEnd, 80);
+        this.tickTask = Bukkit.getScheduler().runTaskTimer(MaturiProvider.instance(), this::performanceParticle, 8, 8);
+        this.nextPhaseTask = Bukkit.getScheduler().runTaskLater(MaturiProvider.instance(), this::performanceEnd, 80);
     }
 
-    private void handlePerformanceParticle() {
+    private void performanceParticle() {
         final var location = this.kakigooriData.display().dropLocation().clone().add(0, 0.35, 0);
         new ParticleBuilder(Particle.FALLING_DUST)
-                .data(this.kakigooriData.data().mainMaterial().createBlockData())
+                .data(this.kakigooriData.shavedIceData().mainMaterial().createBlockData())
                 .location(location)
                 .offset(0.05, 0.2, 0.05)
                 .count(2)
                 .spawn();
         new ParticleBuilder(Particle.FALLING_DUST)
-                .data(this.kakigooriData.data().subMaterial().createBlockData())
+                .data(this.kakigooriData.shavedIceData().subMaterial().createBlockData())
                 .location(location)
                 .offset(0.05, 0.2, 0.05)
                 .count(2)
@@ -146,13 +146,13 @@ public final class Kakigoori {
         this.playSound(Sound.sound(Key.key("ambient.underwater.exit"), Sound.Source.MASTER, 0.2f, 2f), location);
     }
 
-    private void handlePerformanceEnd() {
+    private void performanceEnd() {
         final var clerk = this.kakigooriData.clerk();
         final var drop = this.kakigooriData.display().drop();
         clerk.getEquipment().setItem(EquipmentSlot.HAND, ItemStack.empty());
         clerk.getEquipment().setItem(EquipmentSlot.OFF_HAND, ItemStack.empty());
         clerk.setSpell(Spellcaster.Spell.NONE);
-        drop.setItemStack(ShavedIce.make(this.kakigooriData.data().type()));
+        drop.setItemStack(ShavedIce.make(this.kakigooriData.shavedIceData().type()));
         this.playSound(Sound.sound(Key.key("minecraft:entity.evoker.ambient"), Sound.Source.MASTER, 0.2f, 1.75f), this.kakigooriData.clerkLocation());
 
         if (this.tickTask != null) {
@@ -160,14 +160,14 @@ public final class Kakigoori {
             this.tickTask = null;
         }
 
-        this.nextPhaseTask = Bukkit.getScheduler().runTaskLater(MaturiProvider.instance(), this::handleDrop, 30);
+        this.nextPhaseTask = Bukkit.getScheduler().runTaskLater(MaturiProvider.instance(), this::drop, 30);
     }
 
-    private void handleDrop() {
+    private void drop() {
         final var drop = this.kakigooriData.display().drop();
         final var location = this.kakigooriData.display().dropLocation().clone();
-        final var itemStack = ShavedIce.make(this.kakigooriData.data().type());
-        itemStack.setAmount(this.kakigooriData.data().amount());
+        final var itemStack = ShavedIce.make(this.kakigooriData.shavedIceData().type());
+        itemStack.setAmount(this.kakigooriData.shavedIceData().amount());
         drop.setItemStack(ItemStack.empty());
         location.getWorld().dropItem(location, itemStack, item -> {
             item.setVelocity(new Vector(0, 0.225, 0));

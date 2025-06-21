@@ -5,13 +5,17 @@ import com.google.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.loot.LootTables;
+import org.bukkit.loot.LootContext;
+import org.bukkit.loot.LootTable;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
@@ -20,6 +24,9 @@ import party.morino.maturi.game.Gamer;
 import party.morino.maturi.game.kakigoori.data.KakigooriData;
 import party.morino.maturi.util.MoneyUtils;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @NullMarked
@@ -64,7 +71,7 @@ public final class KakigooriHandler {
         final var cup = this.itemDisplay(cupLoc, ItemStack.empty(), new Matrix4f().scale(0.5f, 0.5f, 0.5f));
         final var drop = this.itemDisplay(dropLoc, ItemStack.empty(), new Matrix4f().scale(0.5f, 0.5f, 0.5f));
 
-        final var a = new KakigooriData.Data(type, ShavedIce.mainMaterial(type), ShavedIce.subMaterial(type), settings.amount());
+        final var a = new KakigooriData.ShavedIceData(type, ShavedIce.mainMaterial(type), ShavedIce.subMaterial(type), settings.amount());
         final var b = new KakigooriData.Display(handle, handleLoc, ice, iceLoc, cup, cupLoc, drop, dropLoc, 5);
         final var c = new KakigooriData(a, b, clerk, clerkLoc, purchaser);
 
@@ -86,7 +93,22 @@ public final class KakigooriHandler {
         clerk.setRotation(180, 0);
         clerk.setAI(false);
         clerk.setSilent(true);
-        clerk.setLootTable(LootTables.VILLAGER.getLootTable());
+        clerk.setLootTable(new LootTable() {
+            @Override
+            public @NotNull Collection<ItemStack> populateLoot(final @Nullable Random random, final @NotNull LootContext context) {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public void fillInventory(final @NotNull Inventory inventory, final @Nullable Random random, final @NotNull LootContext context) {
+                // empty
+            }
+
+            @Override
+            public @NotNull NamespacedKey getKey() {
+                return new NamespacedKey("maturi", "empty_loot_table");
+            }
+        });
         clerk.getEquipment().setItem(EquipmentSlot.HEAD, this.hat());
         clerk.setInvulnerable(true);
         return clerk;

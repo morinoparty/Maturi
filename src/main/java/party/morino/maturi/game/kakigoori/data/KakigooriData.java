@@ -11,17 +11,17 @@ import org.jetbrains.annotations.Range;
 
 @NullMarked
 public record KakigooriData(
-        Data data,
+        ShavedIceData shavedIceData,
         Display display,
         Evoker clerk,
         Location clerkLocation,
         Gamer purchaser
 ) {
-    public record Data(
+    public record ShavedIceData(
             ShavedIce.Type type,
             Material mainMaterial,
             Material subMaterial,
-            @Range(from = 0, to = 64)
+            @Range(from = 0, to = 99)
             int amount
     ) {
     }
