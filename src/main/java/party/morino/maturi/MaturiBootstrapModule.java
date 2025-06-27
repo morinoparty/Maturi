@@ -10,11 +10,11 @@ import java.nio.file.Path;
 
 @SuppressWarnings("UnstableApiUsage")
 @NullMarked
-public final class BootstrapModule extends AbstractModule {
+public final class MaturiBootstrapModule extends AbstractModule {
 
     private final BootstrapContext context;
 
-    public BootstrapModule(
+    public MaturiBootstrapModule(
             final BootstrapContext context
     ) {
         this.context = context;

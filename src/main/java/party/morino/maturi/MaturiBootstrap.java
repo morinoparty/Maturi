@@ -17,7 +17,7 @@ public final class MaturiBootstrap implements PluginBootstrap {
 
     @Override
     public void bootstrap(BootstrapContext context) {
-        this.injector = Guice.createInjector(new BootstrapModule(context));
+        this.injector = Guice.createInjector(new MaturiBootstrapModule(context));
     }
 
     @Override
