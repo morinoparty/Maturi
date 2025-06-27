@@ -42,7 +42,7 @@ public final class ReloadCommand implements MaturiCommand {
                     this.messages.reloadMessage();
                     this.syatekiManager.reload();
 
-                    sender.sendMessage(Component.translatable("command.reload.success.reload"));
+                    sender.sendMessage(Component.translatable("command.reload.success.reload", Messages.DEFAULT_TAGS));
 
                     return Command.SINGLE_SUCCESS;
                 });

@@ -4,7 +4,13 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import io.papermc.paper.plugin.configuration.PluginMeta;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.kyori.adventure.text.minimessage.translation.MiniMessageTranslationStore;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.kyori.adventure.translation.Translator;
@@ -38,7 +44,16 @@ public final class Messages {
             Locale.US, "messages_en_US"
     );
     private final Pattern pattern = Pattern.compile("messages_(.+)\\.properties");
-    private static final String PREFIX = "<white>[<gradient:#005aa7:#fffde4>Maturi</gradient>]</white>";
+
+    public static final ComponentLike DEFAULT_TAGS = Argument.tagResolver(
+            TagResolver.builder()
+                    .resolver(TagResolver.standard())
+                    .tag("prefix", Tag.selfClosingInserting(MiniMessage.miniMessage().deserialize("<dark_gray>[<gradient:#6274e7:#f4e900>Maturi</gradient>]<dark_gray>")))
+                    .tag("success", Tag.styling(parseHex("59ffa4")))
+                    .tag("warn", Tag.styling(parseHex("ffdd00")))
+                    .tag("error", Tag.styling(parseHex("ff4775")))
+                    .build()
+    );
 
     private final Key registryKey;
     private MiniMessageTranslationStore translationRegistry;
@@ -55,6 +70,10 @@ public final class Messages {
         this.translationRegistry = MiniMessageTranslationStore.create(this.registryKey);
 
         this.reloadMessage();
+    }
+
+    public static TextColor parseHex(final String hex) {
+        return TextColor.color(Integer.parseInt(hex, 16));
     }
 
     public void reloadMessage() {
