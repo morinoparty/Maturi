@@ -28,7 +28,7 @@ public final class ShavedIce {
         };
 
         if (item == null) {
-            return new ItemStack(Material.STONE);
+            return ItemStack.of(Material.STONE);
         }
 
         return item.asSimple();

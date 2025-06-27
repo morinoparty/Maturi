@@ -223,15 +223,15 @@ public final class Syateki {
     }
 
     private ItemStack arrow() {
-        return new ItemStack(Material.ARROW);
+        return ItemStack.of(Material.ARROW);
     }
 
     // 要検討
     private ItemStack bow() {
-        final var itemStack = new ItemStack(Material.BOW);
+        final var itemStack = ItemStack.of(Material.BOW);
         itemStack.editMeta(itemMeta -> {
             itemMeta.setCustomModelData(1);
-            itemMeta.displayName(MiniMessage.miniMessage().deserialize("<gradient:#c31432:#240b36><!italic><bold>射的の弓"));
+            itemMeta.customName(MiniMessage.miniMessage().deserialize("<gradient:#c31432:#240b36><!italic><bold>射的の弓"));
             itemMeta.setEnchantmentGlintOverride(false);
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             itemMeta.addEnchant(Enchantment.INFINITY, 1, false);

@@ -66,8 +66,8 @@ public final class KakigooriHandler {
         final var dropLoc = settings.dropLocation().clone();
 
         final var clerk = this.clerk(clerkLoc);
-        final var ice = this.itemDisplay(iceLoc, new ItemStack(Material.ICE), new Matrix4f().scale(0.65f, 0.5f, 0.65f));
-        final var handle = this.itemDisplay(handleLoc, new ItemStack(Material.IRON_TRAPDOOR), new Matrix4f().scale(0.65f, 0.5f, 0.65f));
+        final var ice = this.itemDisplay(iceLoc, ItemStack.of(Material.ICE), new Matrix4f().scale(0.65f, 0.5f, 0.65f));
+        final var handle = this.itemDisplay(handleLoc, ItemStack.of(Material.IRON_TRAPDOOR), new Matrix4f().scale(0.65f, 0.5f, 0.65f));
         final var cup = this.itemDisplay(cupLoc, ItemStack.empty(), new Matrix4f().scale(0.5f, 0.5f, 0.5f));
         final var drop = this.itemDisplay(dropLoc, ItemStack.empty(), new Matrix4f().scale(0.5f, 0.5f, 0.5f));
 
@@ -115,7 +115,7 @@ public final class KakigooriHandler {
     }
 
     private ItemStack hat() {
-        final var itemStack = new ItemStack(Material.FEATHER);
+        final var itemStack = ItemStack.of(Material.FEATHER);
         final var omen = ThreadLocalRandom.current().nextBoolean(); // hyottoko or okame
         itemStack.editMeta(itemMeta -> itemMeta.setCustomModelData(omen ? 17 : 19));
         return itemStack;
